@@ -8,4 +8,8 @@ urlpatterns = [
     path('add/', views.task_add),
     path('tasks/', views.tasks),
     path('task_delete/<id>', views.task_delete),
+
+
+    #API HOME
+    path('home/', views.home),
 ]

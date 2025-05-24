@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <style>
+          .inputBox{
+          position:relative
+          }
+          .w-95{
+            width:95%;
+            font-style: italic;
+          }
+          .right-icon{
+            position: absolute;
+            top: 0;
+            right: 0;
+
+          }
+          .bg-body{
+          background: #f3f3f3 !important;
+
+            color: #15463966 !important;
+            font-weight: 300;
+            padding: 8px 10px;
+            border-radius: 5px;
+          }
+    </style>
+
+</head>
+<body>
+
+<div class="w-50 m-auto mt-3">
+    <h2><i>Rest API Todo List</i></h2>
+    <div class="mt-4 p-5 bg-light rounded">
+        <div class="container">
+            <div class="">
+                <div class="row">
+                    <div class="inputBox">
+                        <form method="post" autocomplete="off" action="/add/">
+                            {% csrf_token %}
+                        <input type="text" placeholder="Enter task" name="task_name" class="form-control w-95" required>
+                        <button type="submit" class="btn btn-primary button right-icon"><i>Search</i></button>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="task_data mt-4 p-1">
+                <div class="row" id="todo_data">
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script>
+$(document).ready(function () {
+    fetchTasks();
+
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+
+        const taskTitle = $('input[name="task_name"]').val().trim();
+        if (!taskTitle) return;
+
+        $.ajax({
+            url: "http://127.0.0.1:8000/api/tasks/",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ name: taskTitle }),
+            success: function () {
+                $('input[name="task_name"]').val("");
+                fetchTasks();
+            },
+            error: function () {
+                alert("Failed to add task.");
+            }
+        });
+    });
+
+    function fetchTasks() {
+        $.ajax({
+            url: "http://127.0.0.1:8000/api/tasks/",
+            method: "GET",
+            success: function (response) {
+                let html = "";
+                const tasks = response.data;
+
+                if (tasks.length === 0) {
+                    html = "<p class='text-muted'>No tasks found.</p>";
+                } else {
+                    tasks.forEach(task => {
+                        html += `
+                            <div class="col-12 bg-body mt-2 d-flex justify-content-between align-items-center" data-id="${task.id}">
+                                <div class="flex-grow-1">
+                                    <input type="text" class="form-control mb-1 task-name" value="${task.name}" />
+                                    <select class="form-select form-select-sm task-status">
+                                        <option value="true" ${task.status ? "selected" : ""}>✅ Completed</option>
+                                        <option value="false" ${!task.status ? "selected" : ""}>❌ Not Completed</option>
+                                    </select>
+                                    <small class="text-muted">${task.created || ''}</small>
+                                </div>
+                                <div class="ms-2">
+                                    <button class="btn btn-sm btn-success save-task"><i class="fa fa-save"></i></button>
+                                    <button class="btn btn-sm btn-danger delete-task"><i class="fa fa-trash"></i></button>
+                                </div>
+                            </div>`;
+                    });
+                }
+
+                $("#todo_data").html(html);
+            },
+            error: function () {
+                alert("Failed to fetch tasks.");
+            }
+        });
+    }
+
+    // DELETE task
+    $(document).on("click", ".delete-task", function () {
+        const taskId = $(this).closest("[data-id]").data("id");
+
+        $.ajax({
+            url: `http://127.0.0.1:8000/api/tasks/${taskId}/`,
+            method: "DELETE",
+            success: fetchTasks,
+            error: () => alert("Failed to delete task.")
+        });
+    });
+
+    // UPDATE task
+    $(document).on("click", ".save-task", function () {
+        const taskElem = $(this).closest("[data-id]");
+        const taskId = taskElem.data("id");
+        const newName = taskElem.find(".task-name").val().trim();
+        const newStatus = taskElem.find(".task-status").val() === "true";
+
+        $.ajax({
+            url: `http://127.0.0.1:8000/api/tasks/${taskId}/`,
+            method: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify({ name: newName, status: newStatus }),
+            success: fetchTasks,
+            error: () => alert("Failed to update task.")
+        });
+    });
+});
+</script>
+
+</html>

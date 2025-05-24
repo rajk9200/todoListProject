@@ -24,13 +24,13 @@ def task_delete(request,id=None):
     except:
         return HttpResponse("Task Deleted")
 
-
-
-
 def tasks(request):
-    tasks =Task.objects.filter()
+    tasks =Task.objects.filter().order_by('-id')
     context={
         "tasks":tasks
     }
     return render(request,'task.html',context)
+
+def home(request):
+    return render(request, "home.html")
 
