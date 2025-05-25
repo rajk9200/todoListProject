@@ -5,15 +5,22 @@ from .views import (
     MyTokenObtainPairView,
     UserProfileView,
     PasswordResetRequestView,
-    PasswordResetConfirmView
+    PasswordResetConfirmView,
+    UserListView,
+UserListByIDView
 )
 
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', MyTokenObtainPairView.as_view(), name='login'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('profile/', UserProfileView.as_view(), name='profile'),
+    # path('profile/', UserProfileView.as_view(), name='profile'),
     path('password-reset/', PasswordResetRequestView.as_view(), name='password-reset'),
     path('password-reset-confirm/<uidb64>/<token>/',
          PasswordResetConfirmView.as_view(), name='password-reset-confirm'),
+
+    path('users/', UserListView.as_view(), name='users'),
+    path('users/<pk>', UserListByIDView.as_view(), name='users-id'),
+    path('profile/', UserProfileView.as_view(), name='profile'),
+
 ]

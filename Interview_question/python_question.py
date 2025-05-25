@@ -4,7 +4,30 @@
 file_1 =['Red', 'Red', 'Red', 'Red', 'Red', 'Red', 'Red', 'Red'] #8
 file_2 = ['White', 'White', 'White', 'White', 'White', 'White', 'White', 'White', 'White', 'White', 'White'] #11
 # output ["Red","White","Red",........"White","Red","White","White","White"]
-output=[]
+output=[k for k in zip(file_1, file_2)]
+print(output)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 n=len(file_1)
 for i in range(n):
     output.append(file_1[i])

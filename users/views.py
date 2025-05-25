@@ -17,6 +17,7 @@ from .serializers import (
     UserCreateSerializer,
     MyTokenObtainPairSerializer,
     UserSerializer,
+    UserProfileSerializer,
     PasswordResetRequestSerializer,
     PasswordResetConfirmSerializer
 )
@@ -24,6 +25,37 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 User = get_user_model()
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from .serializers import UserDetailSerializer
+from rest_framework.parsers import MultiPartParser, FormParser
+
+from .models import Profile
+class UserListView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserProfileSerializer
+
+class UserListByIDView(APIView):
+    def get(self, request, pk=None):
+        user = User.objects.filter(pk=pk).first()
+        if not user:
+            return Response({'detail': 'User not found'}, status=404)
+        serializer = UserProfileSerializer(user)
+        return Response(serializer.data)
+
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
+    def get(self, request):
+        serializer = UserDetailSerializer(request.user)
+        return Response(serializer.data)
+
+    def put(self, request):
+        serializer = UserDetailSerializer(request.user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -35,13 +67,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
-class UserProfileView(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
 
-    def get_object(self):
-        return self.request.user
 
 
 class PasswordResetRequestView(generics.GenericAPIView):
@@ -112,3 +138,5 @@ class PasswordResetConfirmView(generics.GenericAPIView):
                 {'detail': 'Invalid reset link.'},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+

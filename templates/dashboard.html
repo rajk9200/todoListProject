@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User List Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .user-card {
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+        .user-card:hover {
+          background-color: #f0f0f0;
+        }
+        .user-img {
+          width: 50px;
+          height: 50px;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+        #user-detail img.rounded-circle {
+          width: 120px;
+          height: 120px;
+          object-fit: cover;
+        }
+
+        #user-detail .img-fluid {
+          aspect-ratio: 1 / 1;
+          object-fit: cover;
+}
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+  <div class="bg-primary text-white rounded-3 mb-4 shadow-lg text-center p-2">
+    <h3 class="display-4">Welcome to Your Dashboard</h3>
+    <p class="lead">Here’s a quick overview of your stats and recent activity.</p>
+
+  </div>
+</div>
+
+<div class="container-fluid">
+
+
+    <div class="row">
+        <!-- Left Side: User List -->
+        <div class="col-md-4 border-end vh-100 overflow-auto">
+            <div class="list-group" id="user-list">
+                <div class="text-center p-3 text-muted">Loading users...</div>
+            </div>
+
+        </div>
+
+        <!-- Right Side: Description Panel -->
+        <div class="col-md-8 p-4" id="user-detail">
+            <!-- Default view -->
+            <div class="text-center text-muted">
+                <h3>Select a user</h3>
+                <p>Their Instagram-style profile will appear here.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  async function loadUsers() {
+    const listContainer = document.getElementById("user-list");
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/auth/users");
+      if (!response.ok) throw new Error("Network response was not ok");
+
+      const users = await response.json();
+      console.log(users);
+      listContainer.innerHTML = ""; // Clear loading message
+
+      users.forEach(user => {
+        const userCard = document.createElement("div");
+        userCard.className = "list-group-item user-card d-flex align-items-center";
+        debugger;
+        userCard.onclick = () => showUser(user.id);
+
+        userCard.innerHTML = `
+          <img src="${user.profile.profile_image || 'https://via.placeholder.com/50'}" class="user-img me-3" alt="${user.pk}">
+          <div>
+            <h6 class="mb-0">@${user.username}</h6>
+            <small>${user.profile.bio || 'No role provided'}</small>
+          </div>
+        `;
+
+        listContainer.appendChild(userCard);
+      });
+
+    } catch (error) {
+      listContainer.innerHTML = `<div class="text-danger p-3">Failed to load users.</div>`;
+      console.error("Error fetching users:", error);
+    }
+  }
+
+  // Call it on page load
+  window.onload = loadUsers;
+</script>
+
+
+<script>
+  async function showUser(userId) {
+  debugger;
+    const detailContainer = document.getElementById("user-detail");
+    detailContainer.innerHTML = `<div class="text-center text-muted">Loading profile...</div>`;
+
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/auth/users/${userId}`);
+      if (!response.ok) throw new Error("User not found");
+
+      const user = await response.json();
+
+      const profileImage = user.profile?.profile_image || 'https://via.placeholder.com/120';
+      const fullName = `${user.first_name || ''} ${user.last_name || ''}`.trim();
+
+      const gallery = (user.profile?.photos || []).map(url => `
+        <div class="col"><img src="${url}" class="img-fluid rounded" alt="user post"></div>
+      `).join("");
+
+      detailContainer.innerHTML = `
+        <div class="d-flex flex-column align-items-center text-center">
+          <img src="${profileImage}" class="rounded-circle mb-3" alt="${user.username}">
+          <h4>${fullName || user.username}</h4>
+          <p class="text-muted">@${user.username} | ${user.profile?.bio || 'No bio available'}</p>
+
+          <div class="d-flex justify-content-center gap-4 my-3">
+            <div><strong>${user.posts_count || 0}</strong><br><small>Posts</small></div>
+            <div><strong>${user.followers || 0}</strong><br><small>Followers</small></div>
+            <div><strong>${user.following || 0}</strong><br><small>Following</small></div>
+          </div>
+
+          <div class="row row-cols-3 g-2 mt-3">
+            ${gallery || '<div class="text-muted">No photos available</div>'}
+          </div>
+        </div>
+      `;
+
+    } catch (error) {
+      detailContainer.innerHTML = `<div class="text-danger text-center p-3">Failed to load user details.</div>`;
+      console.error("Error fetching user:", error);
+    }
+  }
+</script>
+
+
+
+</body>
+</html>
