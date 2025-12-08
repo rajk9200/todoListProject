@@ -1,17 +1,22 @@
 from django.shortcuts import render,redirect
+from rest_framework.views import APIView
 
-from .forms import LoginForm
+from .forms import LoginForm, RegisterForm
+
+
 # Create your views here.
 def login_view(request):
-    # if request.user.is_authenticated:
-    #     return redirect("/")
     context = {}
     form = LoginForm(request.POST or None)
-
-
-            # messages.add_message(request, messages.INFO,"login failed." )
     context['form'] = form
     return render(request,"login.html",context)
+
+
+def register_view(request):
+    context = {}
+    form = RegisterForm(request.POST or None)
+    context['form'] = form
+    return render(request,"register.html",context)
 
 
 def dashboard_view(request):
@@ -33,3 +38,9 @@ def admin_dashboard(request):
 
 
     return render(request,'admin_dashboard.html',context)
+
+
+
+
+
+

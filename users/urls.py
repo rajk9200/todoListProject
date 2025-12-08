@@ -7,9 +7,11 @@ from .views import (
     PasswordResetRequestView,
     PasswordResetConfirmView,
     UserListView,
-UserListByIDView
+    UserListByIDView,
+    ChatGemini, ReadFileView, VideoDownloader
 )
 
+#api/auth/users
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', MyTokenObtainPairView.as_view(), name='login'),
@@ -20,7 +22,12 @@ urlpatterns = [
          PasswordResetConfirmView.as_view(), name='password-reset-confirm'),
 
     path('users/', UserListView.as_view(), name='users'),
-    path('users/<pk>', UserListByIDView.as_view(), name='users-id'),
+    path('user/<pk>', UserListByIDView.as_view(), name='users-id'),
     path('profile/', UserProfileView.as_view(), name='profile'),
+
+
+    path('chatai/', ChatGemini.as_view(), name='chat-ai'),
+    path('read-file/', ReadFileView.as_view(), name='read-file'),
+    path('download-video/', VideoDownloader.as_view(), name='video-downloader'),
 
 ]

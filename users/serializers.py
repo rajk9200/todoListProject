@@ -5,6 +5,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions
 from rest_framework import serializers
 # serializers.py
+import os
 from .models import Profile
 User = get_user_model()
 class ProfileSerializer(serializers.ModelSerializer):
@@ -105,3 +106,23 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
         except exceptions.ValidationError as e:
             raise serializers.ValidationError(str(e))
         return data
+
+
+class FileUploadSerializer(serializers.Serializer):
+    file = serializers.FileField()
+
+    def validate_file(self, value):
+        valid_extensions = ['.txt', '.csv', '.json', '.html', '.css', '.js',
+                            '.jsx', '.py', '.java', '.c', '.cpp', '.md', '.markdown', '.pdf']
+        file_extension = os.path.splitext(value.name)[1].lower()
+
+        if file_extension not in valid_extensions:
+            raise serializers.ValidationError(
+                f'Invalid file type. Allowed: {", ".join(valid_extensions)}'
+            )
+
+        max_size = 10 * 1024 * 1024  # 10MB (increased for PDFs)
+        if value.size > max_size:
+            raise serializers.ValidationError('File size exceeds 10MB')
+
+        return value

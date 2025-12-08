@@ -13,22 +13,67 @@
     justify-content: center;
     align-items: center;
 }
+
+    .custom{
+        padding:40px 60px !important;
+        border-radius: 120px 40px !important;
+    }
+    .register-btn{
+    font-size:10px
+    }
 </style>
 <body>
 
 <div class="container login-container">
-<div class="col-md-4 bg-light p-4 m-auto rounded">
-    <h3 class="m-4 text-center">Login here </h3>
-    <form method="post">
-        {% csrf_token %}
-        {{form.as_p}}
+<div class="col-md-4 bg-light p-4 m-auto custom">
+    <h3 class="m-4 text-center">LOGIN </h3>
+    <h1 class="alert alert-warning" id="w-error"></h1>
+    <form method="post" id="login-form">
+        <input id="email" type="email" class="form-control mb-2" placeholder="Email" required>
+        <input id="password" type="password" class="form-control mb-2" placeholder="Password" required>
+
+        <div class="form-group register-btn text-right">
+            <a href="#">Forget Password?</a>
+        </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-success">login</button>
+            <button type="submit" class="btn btn-success w-100">login</button>
+        </div>
+        <div class="form-group">
+
         </div>
     </form>
-    <p class="my-4">Don't have an account? <a href="/register">Register here</a></p>
+    <p class="my-4 register-btn">Don't have an account? <a href="/register">Register here</a></p>
 
 </div>
 </div>
+<script>
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const payload = {
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+    };
+
+
+ const response = await fetch('http://127.0.0.1:8000/api/auth/login/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    localStorage.setItem('access_token', data.access);
+    localStorage.setItem('refresh_token', data.refresh);
+    window.location.href = '/'; // ✅ Redirect to home
+    alert("Login successful");
+  } else {
+    $("#w-error").html("eroor")
+    alert("Login failed");
+  }
+});
+
+</script>
 </body>
 {% endblock%}
