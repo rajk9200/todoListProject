@@ -161,7 +161,6 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024  # 5MB
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
