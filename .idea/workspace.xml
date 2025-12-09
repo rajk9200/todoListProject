@@ -5,45 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d65e922a-9be6-4153-a00a-918c115e5c2a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dashboard/reels_download/2025-11-21_13-12-32_UTC.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dashboard/reels_download/2025-11-21_13-12-32_UTC.json.xz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dashboard/reels_download/2025-11-21_13-12-32_UTC.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dashboard/reels_download/2025-11-21_13-12-32_UTC.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dashboard/templates/register.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/users/templates/password_reset_email.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/todoList.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interview_question/code.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interview_question/codiing,py.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interview_question/python_question.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interview_question/questions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interview_question/test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Interview_question/test_code.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/templates/admin_dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/templates/admin_dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/templates/base2.html" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/templates/base2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/templates/nav.html" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/templates/nav.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/templates/sidebar.html" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/templates/sidebar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/img/bg.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/img/bg.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/task/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todoList/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/todoList/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
